@@ -257,6 +257,7 @@ RSpec.describe ViewComponent::Storybook::Stories do
         ContentComponentStories,
         Demo::ButtonComponentStories,
         Demo::HeadingComponentStories,
+        DocumentationStories,
         Invalid::DuplicateControlsStories,
         Invalid::DuplicateStoryStories,
         KitchenSinkComponentStories,

@@ -6,7 +6,7 @@ module ViewComponent
       include ActiveModel::Validations
 
       attr_reader :id, :name, :component
-      attr_accessor :controls, :parameters, :layout, :content_block
+      attr_accessor :controls, :documentation, :parameters, :layout, :content_block
 
       validate :valid_controls
 
@@ -23,7 +23,11 @@ module ViewComponent
         csf_params = { name: name, parameters: { server: { id: id } } }
         csf_params.deep_merge!(parameters: parameters) if parameters.present?
         controls.each do |control|
-          csf_params.deep_merge!(control.to_csf_params)
+          control_params = control.to_csf_params
+          if documentation&.dig(control.param)
+            control_params[:argTypes][control.param].merge!(documentation[control.param])
+          end
+          csf_params.deep_merge!(control_params)
         end
         csf_params
       end
