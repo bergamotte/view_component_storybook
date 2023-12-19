@@ -8,6 +8,10 @@ module ViewComponent
           new(story_config).instance_eval(&block)
         end
 
+        def documentation(**docs)
+          @story_config.documentation = docs
+        end
+
         def parameters(**params)
           @story_config.parameters = params
         end

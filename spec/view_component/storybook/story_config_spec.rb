@@ -83,6 +83,34 @@ RSpec.describe ViewComponent::Storybook::StoryConfig do
       end
     end
 
+    context "with docs" do
+      before do
+        subject.documentation = { title: { description: 'description' } }
+        subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
+      end
+
+      it "writes csf params" do
+        expect(subject.to_csf_params).to eq(
+          {
+            name: "Example Story Config",
+            parameters: {
+              server: { id: "example_story_config" },
+            },
+            args: {
+              title: "OK"
+            },
+            argTypes: {
+              title: {
+                control: { type: :text },
+                description: 'description',
+                name: "Title"
+              }
+            }
+          }
+        )
+      end
+    end
+
     context "with controls and params" do
       before do
         subject.controls << ViewComponent::Storybook::Controls::TextConfig.new(ExampleComponent, :title, "OK")
